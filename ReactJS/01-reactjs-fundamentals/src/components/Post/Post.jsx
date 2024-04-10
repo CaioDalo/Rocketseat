@@ -1,39 +1,60 @@
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import { Avatar } from "../Avatar/Avatar";
 import { Comment } from "../Comment/Comment";
 
 import styles from "./Post.module.css";
 
-export function Post() {
+export function Post({ author, content, publishedAt }) {
+	const publishedDateFormatted = format(
+		publishedAt,
+		"d 'de' LLLL 'às' HH:mm'h'",
+		{
+			locale: ptBR,
+		}
+	);
+
+	const relativeDateToNow = formatDistanceToNow(publishedAt, {
+		locale: ptBR,
+		addSuffix: true,
+	});
+
 	return (
 		<article className={styles.post}>
 			<header>
 				<div className={styles.author}>
-					<Avatar src="https://github.com/CaioDalo.png" />
+					<Avatar src={author.avatarUrl} />
 					<div className={styles.authorInfo}>
-						<strong>Caio Daló</strong>
-						<span>Web Developer</span>
+						<strong>{author.name}</strong>
+						<span>{author.role}</span>
 					</div>
 				</div>
 
-				<time title="28 de Fevereiro às 14:58h" dateTime="2024-02-28 14:57:00">
-					Publicado há 1h
+				<time
+					title={publishedDateFormatted}
+					dateTime={publishedAt.toISOString()}
+				>
+					{relativeDateToNow}
 				</time>
 			</header>
 
 			<div className={styles.content}>
-				<p>Fala galeraa &nbsp; 👋</p>
-				<p>
-					Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-					no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-				</p>
-				<p>
-					<a href="#">👉 &nbsp; jane.design/doctorcare</a>
-				</p>
-				<p>
-					<a href="#">#novoprojeto</a>&nbsp;
-					<a href="#">#nlw</a>&nbsp;
-					<a href="#">#rocketseat</a>&nbsp;
-				</p>
+				{content.map((item, index) => {
+					switch (item.type) {
+						case "paragraph":
+							return <p key={index}>{item.text}</p>;
+						case "link":
+							return (
+								<p key={index}>
+									<a href="#">👉 &nbsp; {item.text}</a>
+								</p>
+							);
+						case "hashtags":
+							return <p key={index}>{item.text}</p>;
+						default:
+							return null;
+					}
+				})}
 			</div>
 
 			<form action="" className={styles.commentForm}>
