@@ -1,0 +1,59 @@
+.taskCard {
+  width: 100%;
+  padding: 16px 20px;
+  color: var(--gray-100);
+  background-color: var(--gray-500);
+  border: 2px solid var(--gray-400);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.checkButton, .checkButtonCompleted {
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.checkButton {
+  background-color: transparent;
+  border: 2px solid var(--blue);
+}
+
+.checkButtonCompleted {
+  border: 2px solid var(--purple-dark);
+  background-color: var(--purple-dark);
+  color: var(--gray-100);
+}
+
+.task, .taskCompleted {
+  width: 100%;
+  max-width: 600px;
+  word-wrap: break-word;
+}
+
+.taskCompleted {
+  text-decoration: line-through;
+  color: var(--gray-300);
+}
+
+.deleteButton {
+  background-color: transparent;
+  line-height: 0;
+  color: var(--gray-300);
+  cursor: pointer;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.1s color;
+  box-sizing: border-box;
+}
+
+.deleteButton:hover {
+  color: var(--danger);
+  background-color: var(--gray-400);
+}

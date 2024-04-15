@@ -1,0 +1,11 @@
+.header {
+  width: 100%;
+  text-align: center;
+  padding: 4.5rem 0 5rem;
+  background-color: var(--gray-700);
+}
+
+.header .logo {
+  height: 3rem;
+  width: auto;
+}
