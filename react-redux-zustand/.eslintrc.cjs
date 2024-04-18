@@ -15,4 +15,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  "globals": {
+    "$": true,
+    "require": true,
+    "process": true
+  },
+  
 }
