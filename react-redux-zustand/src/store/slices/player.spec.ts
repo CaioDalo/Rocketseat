@@ -24,6 +24,7 @@ const exampleInitialState: PlayerState = {
       ]
     },
 
+  isLoading: false,
   currentModuleIndex: 0,
   currentLessonIndex: 0,
 }
@@ -49,7 +50,7 @@ describe("player slice", () => {
     expect(state.currentLessonIndex).toBe(1);
   })
 
-  it("should be able to play next class automatically", () => {
+  it("should be able to play next module automatically", () => {
     const state = reducer(
       {...exampleInitialState,
         currentLessonIndex: 1

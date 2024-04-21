@@ -1,7 +1,18 @@
-import { useCurrentLesson } from "../helper";
+/* import { useCurrentLesson } from "../helper";
+import { userAppSelector } from "../store"; */
+
+import { useCurrentLesson, useStore } from "../zustand-store";
 
 export function Header() {
+	/* const { currentModule, currentLesson } = useCurrentLesson();
+	const isCourseLoading = userAppSelector((state) => state.player.isLoading); */
+
 	const { currentModule, currentLesson } = useCurrentLesson();
+	const isLoading = useStore((state) => state.isLoading);
+
+	if (isLoading) {
+		return <h1 className="text-2xl font-bold">Carregando...</h1>;
+	}
 
 	return (
 		<header className="flex flex-col gap-1">
