@@ -30,9 +30,8 @@ class InverseNumberStream extends Transform {
 
     callback(null, Buffer.from(String(transformed)))
   }
-
 }
 
 new OneToHundredStream()
-  .pipe(new InverseNumberStream)
+  .pipe(new InverseNumberStream())
   .pipe(new MultiplyByTenStream())
