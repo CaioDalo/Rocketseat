@@ -19,8 +19,17 @@ export class Database {
     fs.writeFile(databasePath, JSON.stringify(this.#database))
   }
 
-  select(table) {
-    const data = this.#database[table] ?? []
+  select(table, search) {
+    let data = this.#database[table] ?? []
+
+    if(search) {
+      data = data.filter(row => {
+        return Object.entries(search).some(([key, value]) => {
+          return row[key].toLowerCase().includes(value.toLowerCase())
+        })
+      })
+    }
+    
     return data
   }
 
@@ -42,6 +51,16 @@ export class Database {
     if(itemIndex > -1) {
       this.#database[table].splice(itemIndex, 1)
       this.#persist
+    }
+  }
+
+  update(table, id, data) {
+    const itemIndex = this.#database[table].findIndex(item => item.id === id)
+
+    if(itemIndex > -1) {
+      this.#database[table][itemIndex] = { id, ...data }
+
+      this.#persist()
     }
   }
 }
