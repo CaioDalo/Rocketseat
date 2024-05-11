@@ -1,12 +1,13 @@
 import { randomUUID } from "node:crypto"
 import { Database } from "./database.js"
+import { buildRoutePath } from "../utils/build-route-path.js"
 
 const database = new Database
 
 export const routes = [
   {
     method: "GET",
-    path: "/tasks",
+    path: buildRoutePath("/tasks"),
     handler: (req, res) => {
       const tasks = database.select("tasks")
       return res.writeHead(200).end(JSON.stringify(tasks))
@@ -14,7 +15,7 @@ export const routes = [
   },
   {
     method: "POST",
-    path: "/tasks",
+    path: buildRoutePath("/tasks"),
     handler: (req, res) => {
       const { title, description } = req.body
 
@@ -29,6 +30,30 @@ export const routes = [
 
       database.insert("tasks", newTask)
       return res.writeHead(201).end(JSON.stringify(newTask))
+    }
+  },
+  {
+    method: "PUT",
+    path: buildRoutePath("/tasks/:id"),
+    handler: (req, res) => {
+      const { id } = req.params
+      const { title, description } = req.body
+
+      database.update('tasks', id, {title, description, updated_at: new Date()})
+
+      return res.writeHead(201).end()
+    }
+  },
+
+  {
+    method: "PATCH",
+    path: buildRoutePath("/tasks/:id/complete"),
+    handler: (req, res) => {
+      const { id } = req.params
+
+      database.complete('tasks', id)
+
+      return res.writeHead(201).end()
     }
   }
 ]

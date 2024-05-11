@@ -50,7 +50,7 @@ export class Database {
 
     if(itemIndex > -1) {
       this.#database[table].splice(itemIndex, 1)
-      this.#persist
+      this.#persist()
     }
   }
 

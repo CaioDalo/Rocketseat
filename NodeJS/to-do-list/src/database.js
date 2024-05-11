@@ -35,4 +35,39 @@ export class Database {
 
     return task
   }
+
+  update(table, id, data) {
+    const taskToEditIndex = this.#database[table].findIndex(task => task.id === id)
+    
+    if(taskToEditIndex > -1) {
+      const newData = {
+        id,
+        ...data,
+        created_at: this.#database[table][taskToEditIndex].created_at,
+        completed_at: this.#database[table][taskToEditIndex].completed_at,
+      }
+      
+      this.#database[table][taskToEditIndex] = newData
+      this.#persist() 
+    }
+  }
+
+  complete(table, id) {
+    const taskToCompleteIndex = this.#database[table].findIndex(task => task.id === id)
+    
+    if(taskToCompleteIndex > -1) {
+
+      const newData = {
+        id,
+        title: this.#database[table][taskToCompleteIndex].title,
+        description: this.#database[table][taskToCompleteIndex].description,
+        created_at: this.#database[table][taskToCompleteIndex].created_at,
+        updated_at: this.#database[table][taskToCompleteIndex].updated_at,
+        completed_at: new Date(),
+      }
+      
+      this.#database[table][taskToCompleteIndex] = newData
+      this.#persist() 
+    }
+  }
 }
