@@ -26,7 +26,7 @@ export class Database {
 
   insert(table, task) {
     if(this.#database[table]) {
-      this.#database.push(task)
+      this.#database[table].push(task)
     } else {
       this.#database[table] = [task]
     }
@@ -56,17 +56,7 @@ export class Database {
     const taskToCompleteIndex = this.#database[table].findIndex(task => task.id === id)
     
     if(taskToCompleteIndex > -1) {
-
-      const newData = {
-        id,
-        title: this.#database[table][taskToCompleteIndex].title,
-        description: this.#database[table][taskToCompleteIndex].description,
-        created_at: this.#database[table][taskToCompleteIndex].created_at,
-        updated_at: this.#database[table][taskToCompleteIndex].updated_at,
-        completed_at: new Date(),
-      }
-      
-      this.#database[table][taskToCompleteIndex] = newData
+      this.#database[table][taskToCompleteIndex].completed_at = new Date()
       this.#persist() 
     }
   }
