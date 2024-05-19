@@ -1,14 +1,15 @@
 import fastify from "fastify"
-import { knex } from "./database"
+import { env } from "./env"
+import { transactionsRoutes } from "./routes/transactions"
+
 
 const app = fastify()
 
-app.get('/hello', async () => {
-  const tables = await knex("sqlite_schema").select('*')
-  return tables
+app.register(transactionsRoutes, {
+  prefix: 'transactions'
 })
 
-app.listen({port: 3333}, (err, address) => {
+app.listen({port: env.PORT}, (err, address) => {
   if (err) {
     app.log.error(err)
     process.exit(1)
